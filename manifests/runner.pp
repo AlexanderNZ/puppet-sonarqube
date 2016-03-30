@@ -7,11 +7,10 @@ class sonarqube::runner (
   $download_url     = 'http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist',
   $installroot      = '/usr/local',
   $sonarqube_server = 'http://sonar.local:9000/',
-  $jdbc             = {
-    url      => 'jdbc:h2:tcp://localhost:9092/sonar',
-    username => 'sonar',
-    password => 'sonar',
-  },
+  $jdbc_url = 'jdbc:postgresql://localhost:5432/sonar',
+  $jdbc_username                          = 'postgres',
+  $jdbc_password                          = 'password',
+  
 ) {
   validate_string($package_name)
   validate_absolute_path($installroot)

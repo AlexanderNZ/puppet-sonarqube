@@ -8,12 +8,12 @@
 #----- Default SonarQube server
 sonar.host.url=<%= @sonarqube_server %>
 
-<% if !@jdbc.empty? -%>
 #----- Database
-sonar.jdbc.url=<%= @jdbc['url'] %>
-sonar.jdbc.username=<%= @jdbc['username'] %>
-sonar.jdbc.password=<%= @jdbc['password'] %>
-<% end -%>
+sonar.jdbc.url:                     <% if $jdbc_url %><%= $jdbc_url %><% else %>jdbc:h2:tcp://localhost:9092/sonar<% end %>
+sonar.jdbc.username:                <% if $jdbc_username %><%= $jdbc_username %><% else %>sonar<% end %>
+sonar.jdbc.password:                <% if $jdbc_password %><%= $jdbc_password %><% else %>sonar<% end %>
+
+
 
 #----- Default source code encoding
 #sonar.sourceEncoding=UTF-8

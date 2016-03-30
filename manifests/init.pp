@@ -26,11 +26,11 @@ class sonarqube (
   $download_dir     = '/usr/local/src',
   $context_path     = '/',
   $arch             = $sonarqube::params::arch,
-  $https            = {},
-  $ldap             = {},
+  $https            = { },
+  $ldap             = { },
   # ldap and pam are mutually exclusive. Setting $ldap will annihilate the setting of $pam
-  $pam              = {},
-  $crowd            = {},
+  $pam              = { },
+  $crowd            = { },
   $jdbc             = {
     url                               => 'jdbc:h2:tcp://localhost:9092/sonar',
     username                          => 'sonar',
@@ -42,9 +42,20 @@ class sonarqube (
     min_evictable_idle_time_millis    => '600000',
     time_between_eviction_runs_millis => '30000',
   },
+
+  $jdbc_url = 'jdbc:postgresql://localhost:5432/sonar',
+  $jdbc_username                          = 'postgres',
+  $jdbc_password                          = 'password',
+  $jdbc_max_active                        = '50',
+  $jdbc_max_idle                          = '5',
+  $jdbc_min_idle                          = '2',
+  $jdbc_max_wait                          = '5000',
+  $jdbc_min_evictable_idle_time_millis    = '600000',
+  $jdbc_time_between_eviction_runs_millis = '30000',
+
   $log_folder       = '/var/local/sonar/logs',
   $updatecenter     = true,
-  $http_proxy       = {},
+  $http_proxy       = { },
   $profile          = false,
   $web_java_opts    = undef,
   $search_java_opts = undef,
@@ -106,11 +117,11 @@ class sonarqube (
     destination => $tmpzip,
   }
   ->
-  # ===== Create folder structure =====
-  # so uncompressing new sonar versions at update time use the previous sonar home,
-  # installing new extensions and plugins over the old ones, reusing the db,...
+    # ===== Create folder structure =====
+    # so uncompressing new sonar versions at update time use the previous sonar home,
+    # installing new extensions and plugins over the old ones, reusing the db,...
 
-  # Sonar home
+    # Sonar home
   file { $real_home:
     ensure => directory,
     mode   => '0700',
@@ -134,7 +145,7 @@ class sonarqube (
   ->
   sonarqube::move_to_home { 'logs': }
   ->
-  # ===== Install SonarQube =====
+    # ===== Install SonarQube =====
   exec { 'untar':
     command => "unzip -o ${tmpzip} -d ${installroot} && chown -R ${user}:${group} ${installroot}/${package_name}-${version} && chown -R ${user}:${group} ${real_home}",
     creates => "${installroot}/${package_name}-${version}/bin",
