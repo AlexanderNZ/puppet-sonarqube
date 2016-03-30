@@ -139,9 +139,9 @@ sonar.search.host=<%= @search_host %>
 # Permissions to create tables and indexes must be granted to JDBC user.
 # The schema must be created first.
 
-sonar.jdbc.url:                     <% if $jdbc_url %><%= $jdbc_url %><% else %>jdbc:h2:tcp://localhost:9092/sonar<% end %>
-sonar.jdbc.username:                <% if $jdbc_username %><%= $jdbc_username %><% else %>sonar<% end %>
-sonar.jdbc.password:                <% if $jdbc_password %><%= $jdbc_password %><% else %>sonar<% end %>
+sonar.jdbc.url:                     jdbc:postgresql://localhost:5432/sonar
+sonar.jdbc.username:                sonar
+sonar.jdbc.password:                password
 
 #----- Embedded database H2
 # Note : it does not accept connections from remote hosts, so the
